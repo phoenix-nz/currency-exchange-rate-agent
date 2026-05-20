@@ -1,7 +1,7 @@
 {
   "id": "qHuwNXT6uMsS3dPU",
   "name": "Exchange Rate ECB Sync",
-  "description": "Fetches ECB reference exchange rates daily at 16:30 and writes them to SAP S/4HANA via the SAP MCP Client (BTP destination-based routing, no hardcoded system URLs).",
+  "description": "Fetches ECB reference exchange rates daily at 16:30 and writes them directly to SAP S/4HANA (my426672.s4hana.cloud.sap) via OData v4. Before activating: open the \"Upsert Rate in S4HANA\" node and select your SAP Client Credentials (OAuth2) credential that is configured for the S/4HANA tenant.",
   "nodes": [
     {
       "parameters": {
@@ -164,37 +164,34 @@
     },
     {
       "parameters": {
-        "ordId": "customer.mcpbuilder.s4:apiResource:currency_exchange_rate_MCP:v1",
-        "toolName": "POST_CurrencyExchangeRate",
-        "parameters": {
+        "method": "POST",
+        "url": "https://my426672.s4hana.cloud.sap/sap/opu/odata4/sap/api_currencyexchangerate/srvd_a2x/sap/currencyexchangerate/0001/CurrencyExchangeRate",
+        "sendHeaders": true,
+        "headerParameters": {
           "parameters": [
             {
-              "name": "ExchangeRateType",
-              "value": "={{ $json.ExchangeRateType }}"
+              "name": "Content-Type",
+              "value": "application/json"
             },
             {
-              "name": "SourceCurrency",
-              "value": "={{ $json.SourceCurrency }}"
-            },
-            {
-              "name": "TargetCurrency",
-              "value": "={{ $json.TargetCurrency }}"
-            },
-            {
-              "name": "ExchangeRateEffectiveDate",
-              "value": "={{ $json.ExchangeRateEffectiveDate }}"
-            },
-            {
-              "name": "ExchangeRateValue",
-              "value": "={{ $json.ExchangeRateValue }}"
+              "name": "Accept",
+              "value": "application/json"
             }
           ]
-        }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ ExchangeRateType: $json.ExchangeRateType, SourceCurrency: $json.SourceCurrency, TargetCurrency: $json.TargetCurrency, ExchangeRateEffectiveDate: $json.ExchangeRateEffectiveDate, ExchangeRateValue: $json.ExchangeRateValue }) }}",
+        "options": {
+          "timeout": 30000
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "sapClientCredentials"
       },
       "id": "37c8ad5d-e0ce-4f8d-a2de-d2b774b84659",
       "name": "Upsert Rate in S4HANA",
-      "type": "CUSTOM.sapMcpClient",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
       "position": [
         640,
         0
