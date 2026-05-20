@@ -1,0 +1,219 @@
+{
+  "mcpTranslationVersion": "0.1",
+  "target": {
+    "ordId": "sap.s4:apiResource:CE_CURRENCYEXCHANGERATE_0001:v1",
+    "type": "openapi-v3"
+  },
+  "serverInfo": {
+    "name": "sap.mcp/currency_exchange_rate",
+    "title": "currency_exchange_rate",
+    "version": "1.0.0",
+    "description": "MCP server for the currency_exchange_rate service."
+  },
+  "tools": [
+    {
+      "name": "GET_CurrencyExchangeRate",
+      "title": "GET_CurrencyExchangeRate",
+      "description": "Get entities from CurrencyExchangeRate",
+      "openApiType": {
+        "path": "/CurrencyExchangeRate",
+        "method": "get",
+        "parameters": [
+          {
+            "name": "$top",
+            "description": "Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)",
+            "in": "query",
+            "newParameterName": "top"
+          },
+          {
+            "name": "$skip",
+            "description": "Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)",
+            "in": "query",
+            "newParameterName": "skip"
+          },
+          {
+            "name": "$filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "newParameterName": "filter"
+          },
+          {
+            "name": "$count",
+            "description": "Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)",
+            "in": "query",
+            "newParameterName": "count"
+          },
+          {
+            "name": "$orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "newParameterName": "orderby"
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "newParameterName": "select"
+          }
+        ],
+        "requestBody": {}
+      }
+    },
+    {
+      "name": "POST_CurrencyExchangeRate",
+      "title": "POST_CurrencyExchangeRate",
+      "description": "Add new entity to CurrencyExchangeRate",
+      "openApiType": {
+        "path": "/CurrencyExchangeRate",
+        "method": "post",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "New entity"
+          }
+        ],
+        "requestBody": {
+          "contentType": "application/json"
+        }
+      }
+    },
+    {
+      "name": "GET_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate",
+      "title": "GET_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate",
+      "description": "Get entity from CurrencyExchangeRate by key",
+      "openApiType": {
+        "path": "/CurrencyExchangeRate/{ExchangeRateType}/{SourceCurrency}/{TargetCurrency}/{ExchangeRateEffectiveDate}",
+        "method": "get",
+        "parameters": [
+          {
+            "name": "ExchangeRateType",
+            "description": "Exchange Rate Type",
+            "in": "path",
+            "newParameterName": "exchangeratetype"
+          },
+          {
+            "name": "SourceCurrency",
+            "description": "From Currency",
+            "in": "path",
+            "newParameterName": "sourcecurrency"
+          },
+          {
+            "name": "TargetCurrency",
+            "description": "To Currency",
+            "in": "path",
+            "newParameterName": "targetcurrency"
+          },
+          {
+            "name": "ExchangeRateEffectiveDate",
+            "description": "key: ExchangeRateEffectiveDate",
+            "in": "path",
+            "newParameterName": "exchangerateeffectivedate"
+          },
+          {
+            "name": "$select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "newParameterName": "select"
+          }
+        ],
+        "requestBody": {}
+      }
+    },
+    {
+      "name": "DELETE_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate",
+      "title": "DELETE_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate",
+      "description": "Delete entity from CurrencyExchangeRate",
+      "openApiType": {
+        "path": "/CurrencyExchangeRate/{ExchangeRateType}/{SourceCurrency}/{TargetCurrency}/{ExchangeRateEffectiveDate}",
+        "method": "delete",
+        "parameters": [
+          {
+            "name": "ExchangeRateType",
+            "description": "Exchange Rate Type",
+            "in": "path",
+            "newParameterName": "exchangeratetype"
+          },
+          {
+            "name": "SourceCurrency",
+            "description": "From Currency",
+            "in": "path",
+            "newParameterName": "sourcecurrency"
+          },
+          {
+            "name": "TargetCurrency",
+            "description": "To Currency",
+            "in": "path",
+            "newParameterName": "targetcurrency"
+          },
+          {
+            "name": "ExchangeRateEffectiveDate",
+            "description": "key: ExchangeRateEffectiveDate",
+            "in": "path",
+            "newParameterName": "exchangerateeffectivedate"
+          }
+        ],
+        "requestBody": {}
+      }
+    },
+    {
+      "name": "PATCH_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate",
+      "title": "PATCH_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate",
+      "description": "Update entity in CurrencyExchangeRate",
+      "openApiType": {
+        "path": "/CurrencyExchangeRate/{ExchangeRateType}/{SourceCurrency}/{TargetCurrency}/{ExchangeRateEffectiveDate}",
+        "method": "patch",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "New property values"
+          },
+          {
+            "name": "ExchangeRateType",
+            "description": "Exchange Rate Type",
+            "in": "path",
+            "newParameterName": "exchangeratetype"
+          },
+          {
+            "name": "SourceCurrency",
+            "description": "From Currency",
+            "in": "path",
+            "newParameterName": "sourcecurrency"
+          },
+          {
+            "name": "TargetCurrency",
+            "description": "To Currency",
+            "in": "path",
+            "newParameterName": "targetcurrency"
+          },
+          {
+            "name": "ExchangeRateEffectiveDate",
+            "description": "key: ExchangeRateEffectiveDate",
+            "in": "path",
+            "newParameterName": "exchangerateeffectivedate"
+          }
+        ],
+        "requestBody": {
+          "contentType": "application/json"
+        }
+      }
+    },
+    {
+      "name": "POST__batch",
+      "title": "POST__batch",
+      "description": "Group multiple requests into a single request payload, see [Batch Requests](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_BatchRequests).\n\n*Please note that \"Try it out\" is not supported for this request.*",
+      "openApiType": {
+        "path": "/$batch",
+        "method": "post",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Batch request"
+          }
+        ],
+        "requestBody": {
+          "contentType": "multipart/mixed;boundary=request-separator"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "servers": {
+    "currency-exchange-rate": {
+      "mcp_server_name": "sap.mcp/currency_exchange_rate",
+      "description": "MCP server for the currency_exchange_rate service.",
+      "tools": {
+        "GET_CurrencyExchangeRate": {
+          "description": "Get entities from CurrencyExchangeRate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "top": {
+                "type": "integer",
+                "description": "Show only the first n items"
+              },
+              "skip": {
+                "type": "integer",
+                "description": "Skip the first n items"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter items by property values"
+              },
+              "count": {
+                "type": "boolean",
+                "description": "Include count of items"
+              },
+              "orderby": {
+                "type": "string",
+                "description": "Order items by property values"
+              },
+              "select": {
+                "type": "string",
+                "description": "Select properties to be returned"
+              }
+            },
+            "required": []
+          },
+          "mock_response": {
+            "results": [
+              {
+                "ExchangeRateType": "M",
+                "SourceCurrency": "EUR",
+                "TargetCurrency": "USD",
+                "ExchangeRateEffectiveDate": "/Date(1747699200000)/",
+                "ExchangeRateValue": "1.0821",
+                "IsDirectQuotation": true,
+                "ExchangeRateName": "EUR to USD",
+                "ExchangeRateRatio": "1:1"
+              },
+              {
+                "ExchangeRateType": "M",
+                "SourceCurrency": "EUR",
+                "TargetCurrency": "GBP",
+                "ExchangeRateEffectiveDate": "/Date(1747699200000)/",
+                "ExchangeRateValue": "0.8453",
+                "IsDirectQuotation": true,
+                "ExchangeRateName": "EUR to GBP",
+                "ExchangeRateRatio": "1:1"
+              }
+            ]
+          }
+        },
+        "POST_CurrencyExchangeRate": {
+          "description": "Add new entity to CurrencyExchangeRate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "body": {
+                "type": "object",
+                "description": "New entity with ExchangeRateType, SourceCurrency, TargetCurrency, ExchangeRateEffectiveDate, ExchangeRateValue"
+              }
+            },
+            "required": ["body"]
+          },
+          "mock_response": {
+            "ExchangeRateType": "M",
+            "SourceCurrency": "EUR",
+            "TargetCurrency": "USD",
+            "ExchangeRateEffectiveDate": "/Date(1747699200000)/",
+            "ExchangeRateValue": "1.0821",
+            "IsDirectQuotation": true,
+            "ExchangeRateName": "EUR to USD",
+            "ExchangeRateRatio": "1:1"
+          }
+        },
+        "GET_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate": {
+          "description": "Get entity from CurrencyExchangeRate by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchangeratetype": {
+                "type": "string",
+                "description": "Exchange Rate Type"
+              },
+              "sourcecurrency": {
+                "type": "string",
+                "description": "From Currency"
+              },
+              "targetcurrency": {
+                "type": "string",
+                "description": "To Currency"
+              },
+              "exchangerateeffectivedate": {
+                "type": "string",
+                "description": "Effective date key"
+              },
+              "select": {
+                "type": "string",
+                "description": "Select properties to be returned"
+              }
+            },
+            "required": ["exchangeratetype", "sourcecurrency", "targetcurrency", "exchangerateeffectivedate"]
+          },
+          "mock_response": {
+            "ExchangeRateType": "M",
+            "SourceCurrency": "EUR",
+            "TargetCurrency": "USD",
+            "ExchangeRateEffectiveDate": "/Date(1747699200000)/",
+            "ExchangeRateValue": "1.0821",
+            "IsDirectQuotation": true,
+            "ExchangeRateName": "EUR to USD",
+            "ExchangeRateRatio": "1:1"
+          }
+        },
+        "PATCH_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate": {
+          "description": "Update entity in CurrencyExchangeRate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "body": {
+                "type": "object",
+                "description": "New property values to update"
+              },
+              "exchangeratetype": {
+                "type": "string",
+                "description": "Exchange Rate Type"
+              },
+              "sourcecurrency": {
+                "type": "string",
+                "description": "From Currency"
+              },
+              "targetcurrency": {
+                "type": "string",
+                "description": "To Currency"
+              },
+              "exchangerateeffectivedate": {
+                "type": "string",
+                "description": "Effective date key"
+              }
+            },
+            "required": ["exchangeratetype", "sourcecurrency", "targetcurrency", "exchangerateeffectivedate", "body"]
+          },
+          "mock_response": {
+            "ExchangeRateType": "M",
+            "SourceCurrency": "EUR",
+            "TargetCurrency": "USD",
+            "ExchangeRateEffectiveDate": "/Date(1747699200000)/",
+            "ExchangeRateValue": "1.0900",
+            "IsDirectQuotation": true,
+            "ExchangeRateName": "EUR to USD",
+            "ExchangeRateRatio": "1:1"
+          }
+        },
+        "DELETE_CurrencyExchangeRate_ExchangeRateType_SourceCurrency_TargetCurrency_ExchangeRateEffectiveDate": {
+          "description": "Delete entity from CurrencyExchangeRate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchangeratetype": {
+                "type": "string",
+                "description": "Exchange Rate Type"
+              },
+              "sourcecurrency": {
+                "type": "string",
+                "description": "From Currency"
+              },
+              "targetcurrency": {
+                "type": "string",
+                "description": "To Currency"
+              },
+              "exchangerateeffectivedate": {
+                "type": "string",
+                "description": "Effective date key"
+              }
+            },
+            "required": ["exchangeratetype", "sourcecurrency", "targetcurrency", "exchangerateeffectivedate"]
+          },
+          "mock_response": {}
+        },
+        "POST__batch": {
+          "description": "Group multiple requests into a single batch request payload",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "body": {
+                "type": "string",
+                "description": "Batch request payload"
+              }
+            },
+            "required": ["body"]
+          },
+          "mock_response": {}
+        }
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created_for_agent": "exchange-rate-update-agent",
+    "mock_mode": true,
+    "deterministic": true,
+    "total_servers": 1,
+    "total_tools": 6,
+    "generated_from": ["translation.json"],
+    "generation_date": "2026-05-20"
+  }
+}

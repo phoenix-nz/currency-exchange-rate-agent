@@ -1,0 +1,15 @@
+apiVersion: asset.sap/v1
+kind: Asset
+
+metadata:
+  name: exchange-rate-ecb-sync
+  version: 1.0.0
+
+type: n8n-workflow
+
+sourceRoot: workflows
+
+provides:
+  workflows:
+    - definitionFile: exchange-rate-ecb-sync.n8n.json
+      name: Exchange Rate ECB Sync

@@ -1,0 +1,434 @@
+{
+  "id": "qHuwNXT6uMsS3dPU",
+  "name": "Exchange Rate ECB Sync",
+  "description": "Fetches ECB reference exchange rates daily at 16:30 and writes them to SAP S/4HANA via the SAP MCP Client (BTP destination-based routing, no hardcoded system URLs).",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 16 * * *"
+            }
+          ]
+        }
+      },
+      "id": "9464396b-3f92-4449-90e4-0db0619979d6",
+      "name": "Daily 16:30 Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m1-log",
+              "name": "milestone",
+              "value": "M1.achieved: scheduled trigger fired, workflow started",
+              "type": "string"
+            },
+            {
+              "id": "m1-ts",
+              "name": "startedAt",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1c920fae-ba81-47fa-9bbd-c7d16e6e09a9",
+      "name": "M1 Log: Trigger Fired",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          },
+          "timeout": 15000
+        }
+      },
+      "id": "ba001280-aa41-44f8-9022-38dbd85bc510",
+      "name": "Fetch ECB Rates",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -320,
+        0
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "check-body",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "979241c7-05c4-4f1f-b475-f9de1a5f9a3b",
+      "name": "ECB Fetch OK?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -80,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m2-miss",
+              "name": "milestone",
+              "value": "M2.missed: ECB rates fetch failed, aborting workflow",
+              "type": "string"
+            },
+            {
+              "id": "m2-err",
+              "name": "error",
+              "value": "={{ $json.error || 'Empty response from ECB' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3d1c4724-98d1-4c0d-a9fb-532af7df25bd",
+      "name": "M2 Miss: ECB Fetch Failed",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "02eff9e4-3dc2-45f1-99bd-1f4da3b98f52",
+      "name": "Parse ECB XML",
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        160,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n XML node (xml2js) merges attributes directly onto the object.\n// So currency items look like: { currency: \"USD\", rate: \"1.0821\" }\n// and the date cube looks like: { time: \"2026-05-20\", Cube: [...] }\n\nconst xml = items[0].json;\nconst envelope = xml['gesmes:Envelope'] || xml.Envelope || xml;\n\n// Outer Cube contains the date Cube; handle both array and object forms\nconst outerCube = envelope.Cube || {};\nconst dateCube = Array.isArray(outerCube) ? outerCube[0] : outerCube;\n\n// Inner Cube (with date) also has a Cube child; handle both forms\nconst innerCube = dateCube.Cube || {};\nconst dateLevelCube = Array.isArray(innerCube) ? innerCube[0] : innerCube;\n\n// Effective date \u2014 may be attribute (merged) or under $\nconst effectiveDate = dateLevelCube.time\n  || dateLevelCube.$?.time\n  || new Date().toISOString().slice(0, 10);\n\n// Currency items array\nconst rawCubes = dateLevelCube.Cube || [];\nconst currencyCubes = Array.isArray(rawCubes) ? rawCubes : [rawCubes];\n\nif (!currencyCubes.length) {\n  return [{ json: {\n    milestone: 'M3.missed: rate parsing failed or no currencies found',\n    effectiveDate,\n    count: 0\n  }}];\n}\n\n// Build one output item per currency pair\nconst output = currencyCubes\n  .map(c => {\n    // Support both merged-attrs style ({ currency, rate }) and $ style\n    const currency = c.currency || c.$?.currency;\n    const rate     = c.rate     || c.$?.rate;\n    if (!currency) return null;\n    return {\n      json: {\n        ExchangeRateType: 'M',\n        SourceCurrency: 'EUR',\n        TargetCurrency: currency,\n        ExchangeRateEffectiveDate: effectiveDate,\n        ExchangeRateValue: rate\n      }\n    };\n  })\n  .filter(Boolean);\n\nconsole.log('M3.achieved: rates parsed, ' + output.length + ' currency pairs extracted');\nreturn output;"
+      },
+      "id": "84f54371-84bf-46e2-a9bf-e120d393b6a0",
+      "name": "Extract Currency Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "ordId": "customer.mcpbuilder.s4:apiResource:currency_exchange_rate_MCP:v1",
+        "toolName": "POST_CurrencyExchangeRate",
+        "parameters": {
+          "parameters": [
+            {
+              "name": "ExchangeRateType",
+              "value": "={{ $json.ExchangeRateType }}"
+            },
+            {
+              "name": "SourceCurrency",
+              "value": "={{ $json.SourceCurrency }}"
+            },
+            {
+              "name": "TargetCurrency",
+              "value": "={{ $json.TargetCurrency }}"
+            },
+            {
+              "name": "ExchangeRateEffectiveDate",
+              "value": "={{ $json.ExchangeRateEffectiveDate }}"
+            },
+            {
+              "name": "ExchangeRateValue",
+              "value": "={{ $json.ExchangeRateValue }}"
+            }
+          ]
+        }
+      },
+      "id": "37c8ad5d-e0ce-4f8d-a2de-d2b774b84659",
+      "name": "Upsert Rate in S4HANA",
+      "type": "CUSTOM.sapMcpClient",
+      "typeVersion": 1,
+      "position": [
+        640,
+        0
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m4-ok",
+              "name": "milestone",
+              "value": "M4.achieved: S/4HANA rates updated, rate written",
+              "type": "string"
+            },
+            {
+              "id": "m4-cur",
+              "name": "currency",
+              "value": "={{ $('Extract Currency Items').item.json.TargetCurrency }}",
+              "type": "string"
+            },
+            {
+              "id": "m4-rate",
+              "name": "rate",
+              "value": "={{ $('Extract Currency Items').item.json.ExchangeRateValue }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b8804432-b3ee-4723-9b78-56d02c86b42d",
+      "name": "M4 Log: Rate Written",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m4-miss",
+              "name": "milestone",
+              "value": "M4.missed: one or more S/4HANA rate updates failed",
+              "type": "string"
+            },
+            {
+              "id": "m4-cur",
+              "name": "currency",
+              "value": "={{ $('Extract Currency Items').item.json.TargetCurrency }}",
+              "type": "string"
+            },
+            {
+              "id": "m4-err",
+              "name": "error",
+              "value": "={{ $json.error || 'Unknown error' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "234943cd-1296-444c-ab73-ad04c15089c2",
+      "name": "M4 Log: Rate Failed",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m5-log",
+              "name": "milestone",
+              "value": "M5.achieved: update summary logged",
+              "type": "string"
+            },
+            {
+              "id": "m5-ts",
+              "name": "completedAt",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "47aa45ad-4e3a-4f09-aca7-a70691bca255",
+      "name": "M5 Log: Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 16:30 Trigger": {
+      "main": [
+        [
+          {
+            "node": "M1 Log: Trigger Fired",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M1 Log: Trigger Fired": {
+      "main": [
+        [
+          {
+            "node": "Fetch ECB Rates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch ECB Rates": {
+      "main": [
+        [
+          {
+            "node": "ECB Fetch OK?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "error": [
+        [
+          {
+            "node": "M2 Miss: ECB Fetch Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ECB Fetch OK?": {
+      "main": [
+        [
+          {
+            "node": "Parse ECB XML",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "M2 Miss: ECB Fetch Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse ECB XML": {
+      "main": [
+        [
+          {
+            "node": "Extract Currency Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Currency Items": {
+      "main": [
+        [
+          {
+            "node": "Upsert Rate in S4HANA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert Rate in S4HANA": {
+      "main": [
+        [
+          {
+            "node": "M4 Log: Rate Written",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "error": [
+        [
+          {
+            "node": "M4 Log: Rate Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M4 Log: Rate Written": {
+      "main": [
+        [
+          {
+            "node": "M5 Log: Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "M4 Log: Rate Failed": {
+      "main": [
+        [
+          {
+            "node": "M5 Log: Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  }
+}

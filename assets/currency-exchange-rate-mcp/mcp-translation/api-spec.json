@@ -1,0 +1,951 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Currency Exchange Rate",
+    "version": "1.0.0",
+    "description": "Create, read, update and delete currency exchange rates using this synchronous inbound service.\r\nThis service is based on the OData protocol."
+  },
+  "externalDocs": {
+    "description": "Business Documentation",
+    "url": "https://help.sap.com/http.svc/ahp2/SAP_S4HANA_CLOUD/2602.latest/EN/8b/3bcdce837d48038b09ab0eff224bf9/frameset.htm"
+  },
+  "x-sap-api-type": "ODATAV4",
+  "x-sap-shortText": "Create, read, update and delete currency exchange rates using this synchronous inbound service",
+  "x-sap-software-min-version": "2602",
+  "x-sap-ext-overview": [
+    {
+      "name": "Communication Scenario",
+      "values": [
+        {
+          "text": "Finance - Currency Exchange Rates Integration (SAP_COM_0B18)",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "name": "Scope Items",
+      "values": [
+        {
+          "text": "[Accounting and Financial Close (J58)](https://me.sap.com/processnavigator/SolP/J58 \" Link To BP \")",
+          "format": "markdown"
+        }
+      ]
+    },
+    {
+      "name": "Authentication Methods",
+      "values": [
+        {
+          "text": "x509",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "name": "Service Group Name",
+      "values": [
+        {
+          "text": "API_CURRENCYEXCHANGERATE",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "name": "Business Object",
+      "values": [
+        {
+          "text": "Exchange Rate",
+          "format": "plain"
+        }
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://{host}:{port}/sap/opu/odata4/sap/api_currencyexchangerate/srvd_a2x/sap/currencyexchangerate/0001",
+      "variables": {
+        "host": {
+          "default": ""
+        },
+        "port": {
+          "default": ""
+        }
+      }
+    },
+    {
+      "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata4/sap/api_currencyexchangerate/srvd_a2x/sap/currencyexchangerate/0001"
+    }
+  ],
+  "x-sap-extensible": {
+    "supported": "no"
+  },
+  "tags": [
+    {
+      "name": "Currency Exchange Rate"
+    }
+  ],
+  "paths": {
+    "/CurrencyExchangeRate": {
+      "get": {
+        "summary": "Get entities from CurrencyExchangeRate",
+        "tags": [
+          "Currency Exchange Rate"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ExchangeRateType",
+                  "ExchangeRateType desc",
+                  "SourceCurrency",
+                  "SourceCurrency desc",
+                  "TargetCurrency",
+                  "TargetCurrency desc",
+                  "ExchangeRateEffectiveDate",
+                  "ExchangeRateEffectiveDate desc",
+                  "ExchangeRate",
+                  "ExchangeRate desc",
+                  "AlternativeExchangeRateType",
+                  "AlternativeExchangeRateType desc",
+                  "NumberOfSourceCurrencyUnits",
+                  "NumberOfSourceCurrencyUnits desc",
+                  "NumberOfTargetCurrencyUnits",
+                  "NumberOfTargetCurrencyUnits desc",
+                  "ExchangeRateQuotation",
+                  "ExchangeRateQuotation desc",
+                  "AbsoluteExchangeRate",
+                  "AbsoluteExchangeRate desc",
+                  "DirectQuotedEffectiveExchRate",
+                  "DirectQuotedEffectiveExchRate desc",
+                  "IndirectQuotedEffctvExchRate",
+                  "IndirectQuotedEffctvExchRate desc",
+                  "CurrencyPair",
+                  "CurrencyPair desc",
+                  "CurrencyPairText",
+                  "CurrencyPairText desc",
+                  "ExchangeRateTypeName",
+                  "ExchangeRateTypeName desc",
+                  "SourceCurrencyName",
+                  "SourceCurrencyName desc",
+                  "TargetCurrencyName",
+                  "TargetCurrencyName desc",
+                  "ExchangeRateQuotationName",
+                  "ExchangeRateQuotationName desc",
+                  "AltvExchangeRateTypeName",
+                  "AltvExchangeRateTypeName desc",
+                  "SAP__Messages",
+                  "SAP__Messages desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ExchangeRateType",
+                  "SourceCurrency",
+                  "TargetCurrency",
+                  "ExchangeRateEffectiveDate",
+                  "ExchangeRate",
+                  "AlternativeExchangeRateType",
+                  "NumberOfSourceCurrencyUnits",
+                  "NumberOfTargetCurrencyUnits",
+                  "ExchangeRateQuotation",
+                  "AbsoluteExchangeRate",
+                  "DirectQuotedEffectiveExchRate",
+                  "IndirectQuotedEffctvExchRate",
+                  "CurrencyPair",
+                  "CurrencyPairText",
+                  "ExchangeRateTypeName",
+                  "SourceCurrencyName",
+                  "TargetCurrencyName",
+                  "ExchangeRateQuotationName",
+                  "AltvExchangeRateTypeName",
+                  "SAP__Messages"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved entities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Collection of CurrencyExchangeRate_Type",
+                  "type": "object",
+                  "properties": {
+                    "@odata.count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add new entity to CurrencyExchangeRate",
+        "tags": [
+          "Currency Exchange Rate"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "New entity",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/CurrencyExchangeRate/{ExchangeRateType}/{SourceCurrency}/{TargetCurrency}/{ExchangeRateEffectiveDate}": {
+      "parameters": [
+        {
+          "name": "ExchangeRateType",
+          "in": "path",
+          "required": true,
+          "description": "Exchange Rate Type",
+          "schema": {
+            "type": "string",
+            "maxLength": 4
+          }
+        },
+        {
+          "name": "SourceCurrency",
+          "in": "path",
+          "required": true,
+          "description": "From Currency",
+          "schema": {
+            "type": "string",
+            "maxLength": 3
+          }
+        },
+        {
+          "name": "TargetCurrency",
+          "in": "path",
+          "required": true,
+          "description": "To Currency",
+          "schema": {
+            "type": "string",
+            "maxLength": 3
+          }
+        },
+        {
+          "name": "ExchangeRateEffectiveDate",
+          "in": "path",
+          "required": true,
+          "description": "key: ExchangeRateEffectiveDate",
+          "schema": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-04-13"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get entity from CurrencyExchangeRate by key",
+        "tags": [
+          "Currency Exchange Rate"
+        ],
+        "parameters": [
+          {
+            "name": "$select",
+            "in": "query",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ExchangeRateType",
+                  "SourceCurrency",
+                  "TargetCurrency",
+                  "ExchangeRateEffectiveDate",
+                  "ExchangeRate",
+                  "AlternativeExchangeRateType",
+                  "NumberOfSourceCurrencyUnits",
+                  "NumberOfTargetCurrencyUnits",
+                  "ExchangeRateQuotation",
+                  "AbsoluteExchangeRate",
+                  "DirectQuotedEffectiveExchRate",
+                  "IndirectQuotedEffctvExchRate",
+                  "CurrencyPair",
+                  "CurrencyPairText",
+                  "ExchangeRateTypeName",
+                  "SourceCurrencyName",
+                  "TargetCurrencyName",
+                  "ExchangeRateQuotationName",
+                  "AltvExchangeRateTypeName",
+                  "SAP__Messages"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update entity in CurrencyExchangeRate",
+        "tags": [
+          "Currency Exchange Rate"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "New property values",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete entity from CurrencyExchangeRate",
+        "tags": [
+          "Currency Exchange Rate"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/$batch": {
+      "post": {
+        "summary": "Send a group of requests",
+        "description": "Group multiple requests into a single request payload, see [Batch Requests](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_BatchRequests).\n\n*Please note that \"Try it out\" is not supported for this request.*",
+        "tags": [
+          "Batch Requests"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Batch request",
+          "content": {
+            "multipart/mixed;boundary=request-separator": {
+              "schema": {
+                "type": "string"
+              },
+              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET CurrencyExchangeRate HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch response",
+            "content": {
+              "multipart/mixed": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "--response-separator\nContent-Type: application/http\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n{...}\n--response-separator--"
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type": {
+        "type": "object",
+        "x-sap-object-node-type": "ExchangeRate",
+        "properties": {
+          "ExchangeRateType": {
+            "type": "string",
+            "maxLength": 4,
+            "title": "Exchange Rate Type"
+          },
+          "SourceCurrency": {
+            "type": "string",
+            "maxLength": 3,
+            "title": "From Currency"
+          },
+          "TargetCurrency": {
+            "type": "string",
+            "maxLength": 3,
+            "title": "To Currency"
+          },
+          "ExchangeRateEffectiveDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-04-13"
+          },
+          "ExchangeRate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "x-sap-scale": 5,
+            "multipleOf": 0.00001,
+            "minimum": -9999.99999,
+            "maximum": 9999.99999,
+            "example": 0,
+            "title": "Exchange Rate"
+          },
+          "AlternativeExchangeRateType": {
+            "type": "string",
+            "maxLength": 4,
+            "title": "Alternative E/R Type",
+            "description": "Alternative Exchange Rate Type"
+          },
+          "NumberOfSourceCurrencyUnits": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "multipleOf": 1,
+            "minimum": -999999999,
+            "maximum": 999999999,
+            "example": 0,
+            "title": "Ratio (from)",
+            "description": "Ratio for the \"from\" currency units"
+          },
+          "NumberOfTargetCurrencyUnits": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "multipleOf": 1,
+            "minimum": -999999999,
+            "maximum": 999999999,
+            "example": 0,
+            "title": "Ratio (to)",
+            "description": "Ratio for the \"to\" currency units"
+          },
+          "ExchangeRateQuotation": {
+            "type": "string",
+            "maxLength": 1,
+            "title": "Exchange Rate Quotation"
+          },
+          "AbsoluteExchangeRate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "x-sap-scale": 5,
+            "multipleOf": 0.00001,
+            "minimum": -9999.99999,
+            "maximum": 9999.99999,
+            "example": 0,
+            "title": "Absolute Exchange Rate"
+          },
+          "DirectQuotedEffectiveExchRate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "x-sap-scale": 5,
+            "multipleOf": 0.00001,
+            "minimum": -9999.99999,
+            "maximum": 9999.99999,
+            "example": 0,
+            "title": "Direct Exch. Rate",
+            "description": "Direct Quoted Effective Exchange Rate"
+          },
+          "IndirectQuotedEffctvExchRate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "x-sap-scale": 5,
+            "multipleOf": 0.00001,
+            "minimum": -9999.99999,
+            "maximum": 9999.99999,
+            "example": 0,
+            "title": "Indirect Exch. Rate",
+            "description": "Indirect Quoted Effective Exchange Rate"
+          },
+          "CurrencyPair": {
+            "type": "string",
+            "maxLength": 20,
+            "title": "Currency Pair"
+          },
+          "CurrencyPairText": {
+            "type": "string",
+            "maxLength": 85,
+            "title": "Currency Pair Text"
+          },
+          "ExchangeRateTypeName": {
+            "type": "string",
+            "maxLength": 40,
+            "title": "Usage",
+            "description": "Exchange rate type usage"
+          },
+          "SourceCurrencyName": {
+            "type": "string",
+            "maxLength": 40,
+            "title": "Description"
+          },
+          "TargetCurrencyName": {
+            "type": "string",
+            "maxLength": 40,
+            "title": "Description"
+          },
+          "ExchangeRateQuotationName": {
+            "type": "string",
+            "maxLength": 60,
+            "title": "Logical System",
+            "description": "Char 60"
+          },
+          "AltvExchangeRateTypeName": {
+            "type": "string",
+            "maxLength": 40,
+            "title": "Usage",
+            "description": "Exchange rate type usage"
+          },
+          "SAP__Messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.SAP__Message"
+            }
+          }
+        },
+        "title": "Currency Exchange Rate"
+      },
+      "com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type-create": {
+        "type": "object",
+        "x-sap-object-node-type": "ExchangeRate",
+        "properties": {
+          "ExchangeRateEffectiveDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2017-04-13"
+          },
+          "ExchangeRateQuotation": {
+            "type": "string",
+            "maxLength": 1,
+            "title": "Exchange Rate Quotation"
+          },
+          "AbsoluteExchangeRate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "x-sap-scale": 5,
+            "multipleOf": 0.00001,
+            "minimum": -9999.99999,
+            "maximum": 9999.99999,
+            "example": 0,
+            "title": "Absolute Exchange Rate"
+          },
+          "SAP__Messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.SAP__Message-create"
+            }
+          }
+        },
+        "required": [
+          "ExchangeRateEffectiveDate"
+        ],
+        "title": "Currency Exchange Rate (for create)"
+      },
+      "com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.CurrencyExchangeRate_Type-update": {
+        "type": "object",
+        "x-sap-object-node-type": "ExchangeRate",
+        "properties": {
+          "ExchangeRateQuotation": {
+            "type": "string",
+            "maxLength": 1,
+            "title": "Exchange Rate Quotation"
+          },
+          "AbsoluteExchangeRate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "format": "decimal",
+            "x-sap-precision": 9,
+            "x-sap-scale": 5,
+            "multipleOf": 0.00001,
+            "minimum": -9999.99999,
+            "maximum": 9999.99999,
+            "example": 0,
+            "title": "Absolute Exchange Rate"
+          },
+          "SAP__Messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.SAP__Message-update"
+            }
+          }
+        },
+        "title": "Currency Exchange Rate (for update)"
+      },
+      "com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.SAP__Message": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string",
+            "nullable": true
+          },
+          "additionalTargets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "transition": {
+            "type": "boolean"
+          },
+          "numericSeverity": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "longtextUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "title": "SAP__Message"
+      },
+      "com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.SAP__Message-create": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string",
+            "nullable": true
+          },
+          "additionalTargets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "transition": {
+            "type": "boolean"
+          },
+          "numericSeverity": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "longtextUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "title": "SAP__Message (for create)"
+      },
+      "com.sap.gateway.srvd_a2x.api_currencyexchangerate.v0001.SAP__Message-update": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string",
+            "nullable": true
+          },
+          "additionalTargets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "transition": {
+            "type": "boolean"
+          },
+          "numericSeverity": {
+            "type": "integer",
+            "format": "uint8"
+          },
+          "longtextUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "title": "SAP__Message (for update)"
+      },
+      "count": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "description": "The number of entities in the collection. Available when using the [$count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount) query option."
+      },
+      "error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "code",
+                    "message"
+                  ],
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "innererror": {
+                "type": "object",
+                "description": "The structure of this object is service-specific"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "top": {
+        "name": "$top",
+        "in": "query",
+        "description": "Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "example": 50
+      },
+      "skip": {
+        "name": "$skip",
+        "in": "query",
+        "description": "Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "count": {
+        "name": "$count",
+        "in": "query",
+        "description": "Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "search": {
+        "name": "$search",
+        "in": "query",
+        "description": "Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "error": {
+        "description": "Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2Auth": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "scopes": {
+              "OV4:API_CURRENCYEXCHANGERATE": ""
+            },
+            "refreshUrl": "https://{host}:{port}",
+            "authorizationUrl": "https://{host}:{port}",
+            "tokenUrl": "https://{host}:{port}"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2Auth": [
+        "OV4:API_CURRENCYEXCHANGERATE"
+      ]
+    }
+  ]
+}

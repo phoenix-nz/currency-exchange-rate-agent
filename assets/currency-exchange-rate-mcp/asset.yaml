@@ -1,0 +1,10 @@
+apiVersion: asset.sap/v1
+kind: Asset
+
+metadata:
+  name: currency-exchange-rate-mcp
+  ordId: customer.mcpbuilder.s4:apiResource:currency_exchange_rate_MCP:v1
+  version: 1.0.0
+  translation: mcp-translation/translation.json
+
+type: mcp-server
